@@ -9,7 +9,6 @@ def printMessage():
     print("2) Connect Four")
     print("3) Checkers")
 
-
 def minimax(game_no, board, depth, engineTurn: bool) -> int:
     if depth == 0: 
         return board.evalGame(game_no)
@@ -42,11 +41,10 @@ def tictactoe():
         print("Engine making first move")
     else:
         print("Player making first move")
-
     print()
 
     while b.gameComplete(1) == False:
-        engineTurn = False
+        #engineTurn = False
         if engineTurn:
             children = b.getChildren(1, True)
             bestMove = children[0]

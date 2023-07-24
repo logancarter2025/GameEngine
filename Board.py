@@ -67,8 +67,14 @@ class Board(object):
 
         return children
     
+    #Engine maximizing, user minimizing
     def tictactoeEval(self):
-        return -1
+        #unfinished game is 'neutral' in tic-tac-toe
+        if not self.tictactoeGameComplete():
+            return 0
+        
+
+        
 
     def evalGame(self, game_no: int) -> int:
         if game_no == 1:
@@ -77,6 +83,39 @@ class Board(object):
     def gameComplete(self, game_no):
         if game_no == 1:
             return self.tictactoeGameComplete()
+        
+        #Checking for horizonal win
+        for i in range(self.numRows):
+            if self.board[i][0] == self.board[i][1] and self.board[i][0] == self.board[i][2] and self.board[i][0] != ' ':
+                if self.board[i][0] == 'o':
+                    return 1
+                else:
+                    return -1
+                
+
+        #Checking for vertical win
+        for i in range(self.numCols):
+            if self.board[0][i] == self.board[1][i] and self.board[0][i] == self.board[2][i] and self.board[0][i] != ' ':
+                if self.board[0][i] == 'o':
+                    return 1
+                else:
+                    return -1
+                
+        
+        #Checking for main diagonal win
+        if self.board[0][0] == self.board[1][1] and self.board[0][0] == self.board[2][2] and self.board[0][0] != ' ':
+            if self.board[0][0] == 'o':
+                return 1
+            return -1
+        
+        if self.board[2][0] == self.board[1][1] and self.board[2][0] == self.board[0][2] and self.board[2][0] != ' ':
+            if self.board[2][0] == 'o':
+                return 1
+            return -1
+
+                
+        
+
         
     def tictactoeGameComplete(self):
 
