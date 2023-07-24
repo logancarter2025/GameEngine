@@ -6,16 +6,13 @@ def printMessage():
     print("Enter number to indicate which game you would like to play")
     print("1) Tic-Tac-Toe")
 
-def getPositions(board, game_no, engineTurn:bool):
-    return -1
-
 def minimax(game_no, board, depth, engineTurn: bool) -> int:
     if depth == 0: 
         return board.evalGame(game_no)
     
     if engineTurn:
         maxEval = -math.inf
-        children = getPositions(board, game_no, True)
+        children = board.getChildren(game_no, engineTurn)
         for child in children:
             eval = minimax(game_no, child, depth - 1, False)
             maxEval = max(maxEval, eval)
@@ -23,7 +20,7 @@ def minimax(game_no, board, depth, engineTurn: bool) -> int:
     
     else:
         minEval = math.inf
-        children = getPositions(board, game_no, False)
+        children = board.getChildren(game_no, engineTurn)
         for child in children:
             eval = minimax(game_no, child, depth - 1, True)
             minEval = min(minEval, eval)
@@ -32,6 +29,10 @@ def minimax(game_no, board, depth, engineTurn: bool) -> int:
 
 def tictactoe():
     b = Board(3, 3)
+    children = b.getChildren(1, True)
+    for x in children:
+        print(x)
+        print()
 
 if __name__ == "__main__":
     
