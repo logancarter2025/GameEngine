@@ -81,18 +81,26 @@ class Board(object):
     def tictactoeGameComplete(self):
 
         #Checking for 3 in a row
+
+        #Checking for horizonal connections
         for i in range(self.numRows):
-            if self.board[i][0] == self.board[i][1] and self.board[i][0] == self.board[i][2]:
+            if self.board[i][0] == self.board[i][1] and self.board[i][0] == self.board[i][2] and self.board[i][0] != ' ':
+                #print("Game complete 0")
                 return True
             
+        #Checking for vertical connections
         for i in range(self.numCols):
-            if self.board[0][i] == self.board[1][i] and self.board[0][0] == self.board[2][i]:
+            if self.board[0][i] == self.board[1][i] and self.board[0][i] == self.board[2][i] and self.board[0][i] != ' ':
+                #print("Game complete 1")
                 return True
         
-        if self.board[0][0] == self.board[1][1] and self.board[0][0] == self.board[2][2]:
+        #Checking for main diagonal connection
+        if self.board[0][0] == self.board[1][1] and self.board[0][0] == self.board[2][2] and self.board[0][0] != ' ':
             return True
         
-        if self.board[2][0] == self.board[1][1] and self.board[2][0] == self.board[0][2]:
+        #Checking for other diagonal connection
+        if self.board[2][0] == self.board[1][1] and self.board[2][0] == self.board[0][2] and self.board[2][0] != ' ':
+            #print("Game complete 2")
             return True
         
         #Checking for full board

@@ -43,7 +43,10 @@ def tictactoe():
     else:
         print("Player making first move")
 
+    print()
+
     while b.gameComplete(1) == False:
+        engineTurn = False
         if engineTurn:
             children = b.getChildren(1, True)
             bestMove = children[0]
@@ -57,18 +60,16 @@ def tictactoe():
 
         else: # user turn
             print(b)
-            row_no = int(input("what row would you like to place your piece: ").strip)
-            col_no = int(input("what col would you like to place your piece: ").strip)
+            row_no = int(input("what row would you like to place your piece: ").strip())
+            col_no = int(input("what col would you like to place your piece: ").strip())
             b.changeVal(row_no, col_no, 'x')
         
         engineTurn = not engineTurn
 
-    
+    print(b)
 
 
 if __name__ == "__main__":   
-    for i in range(100):
-        print(random.randint(0,1)) 
     printMessage()
     game_no = int(input("Enter number of game you would like to play: ").strip())
 
