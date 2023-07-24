@@ -74,16 +74,6 @@ class Board(object):
             return 0
         
 
-        
-
-    def evalGame(self, game_no: int) -> int:
-        if game_no == 1:
-            return self.tictactoeEval() 
-        
-    def gameComplete(self, game_no):
-        if game_no == 1:
-            return self.tictactoeGameComplete()
-        
         #Checking for horizonal win
         for i in range(self.numRows):
             if self.board[i][0] == self.board[i][1] and self.board[i][0] == self.board[i][2] and self.board[i][0] != ' ':
@@ -112,11 +102,21 @@ class Board(object):
             if self.board[2][0] == 'o':
                 return 1
             return -1
-
-                
+        
+        return 0
         
 
+    def evalGame(self, game_no: int) -> int:
+        if game_no == 1:
+            return self.tictactoeEval() 
         
+        return 0
+        
+    def gameComplete(self, game_no):
+        if game_no == 1:
+            return self.tictactoeGameComplete()               
+        
+
     def tictactoeGameComplete(self):
 
         #Checking for 3 in a row

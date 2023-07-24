@@ -37,23 +37,24 @@ def tictactoe():
     if random.randint(0,1) == 1:
         engineTurn = True
     
+
+    engineTurn = True
     if engineTurn:
         print("Engine making first move")
     else:
         print("Player making first move")
     print()
-
+    
     while b.gameComplete(1) == False:
         #engineTurn = False
         if engineTurn:
             children = b.getChildren(1, True)
-            bestMove = children[0]
-            bestEval = minimax(1, bestMove, 9, False)
+            bestEval = minimax(1, b, 9, True)
             for child in children:
-                eval = minimax(1, child, 9, False)
-                if eval > bestEval:
+                eval = minimax(1, child, 8, False)
+                if eval == bestEval:
                     bestMove = child
-                    bestEval = eval
+                    break
             b = bestMove
 
         else: # user turn
@@ -64,7 +65,7 @@ def tictactoe():
         
         engineTurn = not engineTurn
 
-    print(b)
+    print(b.evalGame(1))
 
 
 if __name__ == "__main__":   
