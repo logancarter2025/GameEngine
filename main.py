@@ -6,8 +6,8 @@ def printMessage():
     print("Enter number to indicate which game you would like to play (-1 to stop)")
     print("0) Stop playing")
     print("1) Tic-Tac-Toe")
-    print("2) Connect Four")
-    print("3) Checkers")
+    #print("2) Connect Four")
+    #print("3) Checkers")
 
 def minimax(game_no, board, depth, engineTurn: bool) -> int:
     if depth == 0: 
@@ -52,7 +52,7 @@ def tictactoe():
             bestEval = minimax(1, b, 9, True)
             for child in children:
                 eval = minimax(1, child, 8, False)
-                if eval == bestEval:
+                if eval >= bestEval:
                     bestMove = child
                     break
             b = bestMove
