@@ -73,3 +73,33 @@ class Board(object):
     def evalGame(self, game_no: int) -> int:
         if game_no == 1:
             return self.tictactoeEval() 
+        
+    def gameComplete(self, game_no):
+        if game_no == 1:
+            return self.tictactoeGameComplete()
+        
+    def tictactoeGameComplete(self):
+
+        #Checking for 3 in a row
+        for i in range(self.numRows):
+            if self.board[i][0] == self.board[i][1] and self.board[i][0] == self.board[i][2]:
+                return True
+            
+        for i in range(self.numCols):
+            if self.board[0][i] == self.board[1][i] and self.board[0][0] == self.board[2][i]:
+                return True
+        
+        if self.board[0][0] == self.board[1][1] and self.board[0][0] == self.board[2][2]:
+            return True
+        
+        if self.board[2][0] == self.board[1][1] and self.board[2][0] == self.board[0][2]:
+            return True
+        
+        #Checking for full board
+        for i in range(self.numRows):
+            for j in range(self.numCols):
+                if self.board[i][j] == ' ':
+                    return False
+        
+        #Board is full with no winner
+        return True
