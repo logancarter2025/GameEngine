@@ -1,5 +1,5 @@
 class Board(object):
-    def __init__(self, numRows, numCols):
+    def __init__(self, numRows: int, numCols: int):
         self.numRows = numRows
         self.numCols = numCols
         self.board = [  ]
@@ -17,5 +17,9 @@ class Board(object):
 
         return s[:-1]
 
-    def changeVal(self, row, col, newVal):
+    def changeVal(self, row: int, col: int, newVal):
         self.board[row][col] = newVal
+
+    def evalGame(self, game_no):
+
+        return 
