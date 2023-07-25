@@ -82,28 +82,11 @@ def tictactoe():
 
     print("Game Over")
     print(b)
+     
+def connect4():
+    b = Board(3, 3)
 
-def simulation():
-    for x in range(100):
-        b = Board(3,3)
-        for i in range(3):
-            for j in range(3):
-                r = random.randint(1,2)
-                if r == 1:
-                    b.changeVal(i, j, 'o')
 
-                else:
-                    b.changeVal(i, j, 'x')
-
-                if b.gameComplete(1):
-                    break
-
-            if b.gameComplete(1):
-                    break
-
-        print(b.evalGame(1))
-        print(b)
-        
 if __name__ == "__main__":   
     printMessage()
     game_no = int(input("Enter the number of game you would like to play: ").strip())
@@ -112,6 +95,9 @@ if __name__ == "__main__":
 
         if game_no == 1:
             tictactoe()
+
+        elif game_no == 2:
+            connect4()
 
         printMessage()
         game_no = int(input("Enter number of game you would like to play: ").strip())
