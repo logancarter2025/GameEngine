@@ -10,12 +10,12 @@ def printMessage():
     #print("3) Checkers")
 
 def minimax(game_no, board, depth, engineTurn: bool) -> int:
-    if depth == 0: 
+    if depth == 0 or board.gameComplete(1): 
         return board.evalGame(game_no)
     
     if engineTurn:
         maxEval = -math.inf
-        children = board.getChildren(game_no, engineTurn)
+        children = board.getChildren(game_no, True)
         for child in children:
             eval = minimax(game_no, child, depth - 1, False)
             maxEval = max(maxEval, eval)
@@ -23,7 +23,7 @@ def minimax(game_no, board, depth, engineTurn: bool) -> int:
     
     else:
         minEval = math.inf
-        children = board.getChildren(game_no, engineTurn)
+        children = board.getChildren(game_no, False)
         for child in children:
             eval = minimax(game_no, child, depth - 1, True)
             minEval = min(minEval, eval)
@@ -38,7 +38,7 @@ def tictactoe():
         engineTurn = True
     
 
-    engineTurn = True
+    #engineTurn = True
     if engineTurn:
         print("Engine making first move")
     else:
@@ -46,12 +46,12 @@ def tictactoe():
     print()
     
     while b.gameComplete(1) == False:
-        #engineTurn = False
         if engineTurn:
             children = b.getChildren(1, True)
-            bestEval = minimax(1, b, 9, True)
+            print("I have", len(children), "children")
+            bestEval = minimax(1, b, 10, True)
             for child in children:
-                eval = minimax(1, child, 8, False)
+                eval = minimax(1, child, 10, False)
                 if eval >= bestEval:
                     bestMove = child
                     break
@@ -59,13 +59,35 @@ def tictactoe():
 
         else: # user turn
             print(b)
-            row_no = int(input("what row would you like to place your piece: ").strip())
-            col_no = int(input("what col would you like to place your piece: ").strip())
-            b.changeVal(row_no, col_no, 'x')
+            space = int(input("where would you like to place your piece: ").strip()) - 1
+            b.changeVal(space//3, space%3, 'x')
         
         engineTurn = not engineTurn
 
-    print(b.evalGame(1))
+    print("Game Over")
+    print(b)
+
+def simulation():
+    for x in range(100):
+        b = Board(3,3)
+        for i in range(3):
+            for j in range(3):
+                r = random.randint(1,2)
+                if r == 1:
+                    b.changeVal(i, j, 'o')
+
+                else:
+                    b.changeVal(i, j, 'x')
+
+                if b.gameComplete(1):
+                    break
+
+            if b.gameComplete(1):
+                    break
+
+        print(b.evalGame(1))
+        print(b)
+        
 
 
 if __name__ == "__main__":   
@@ -73,10 +95,9 @@ if __name__ == "__main__":
     game_no = int(input("Enter number of game you would like to play: ").strip())
 
     while(game_no != 0):
-        
 
         if game_no == 1:
-            print("You are now playing tic-tac-toe")
+            #print("You are now playing tic-tac-toe")
             tictactoe()
 
         printMessage()
