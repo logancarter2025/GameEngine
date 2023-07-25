@@ -84,7 +84,7 @@ def tictactoe():
     print(b)
      
 def connect4():
-    b = Board(3, 3)
+    b = Board(6, 7)
 
 
 if __name__ == "__main__":   
