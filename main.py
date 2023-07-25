@@ -3,7 +3,7 @@ import random
 import math
 
 def printMessage():
-    print("Enter number to indicate which game you would like to play (-1 to stop)")
+    print("Enter number to indicate which game you would like to play (0 to stop)")
     print("0) Stop playing")
     print("1) Tic-Tac-Toe")
     #print("2) Connect Four")
@@ -31,7 +31,6 @@ def minimax(game_no, board, depth, engineTurn: bool) -> int:
             minEval = min(minEval, eval)
         return minEval
         
-
 def tictactoe():
     b = Board(3, 3)
     
@@ -39,18 +38,29 @@ def tictactoe():
     if random.randint(0,1) == 1:
         engineTurn = True
 
+    print('+---+---+---+')
+    print('| 1 | 2 | 3 |')
+    print('+---+---+---+')
+    print('| 4 | 5 | 6 |')
+    print('+---+---+---+')
+    print('| 7 | 8 | 9 |')
+    print('+---+---+---+\n')
+
+
     if engineTurn:
-        print("Engine making first move")
+        print("Engine making first move\n")
     else:
-        print("Player making first move")
-    print()
+        print("Player making first move\n")
     
     while b.gameComplete(1) == False:
         if engineTurn:
             children = b.getChildren(1, True)
+
+            print(b)
+            print("Thinking... I have", len(children), "options.")
+
             bestEval = minimax(1, b, 10, True)
 
-            print("Thinking... I have", len(children), "options.")
             if len(children) != 9: #For starting move we should start on a corner every time
                 random.shuffle(children) #Engine is no longer deterministic
 
