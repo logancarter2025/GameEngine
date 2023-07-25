@@ -22,7 +22,6 @@ class Board(object):
         new.setBoard(self.board)
         return new
 
-
     def __str__(self):
         s = ''
 
@@ -37,11 +36,9 @@ class Board(object):
     def getVal(self, row: int, col: int, newVal):
         return self.board[row][col]
 
-
     def getChildren(self, game_no: int, engineTurn: bool) -> list:
         if game_no == 1:
             return self.tictactoeChildren(engineTurn) 
-
 
     def tictactoeChildren(self, engineTurn: bool) -> list: 
         children = []
@@ -105,7 +102,6 @@ class Board(object):
         
         return 0
         
-
     def evalGame(self, game_no: int) -> int:
         if game_no == 1:
             return self.tictactoeEval() 
@@ -116,7 +112,6 @@ class Board(object):
         if game_no == 1:
             return self.tictactoeGameComplete()               
         
-
     def tictactoeGameComplete(self):
 
         #Checking for 3 in a row

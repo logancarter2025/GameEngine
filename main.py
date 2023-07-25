@@ -37,7 +37,7 @@ def tictactoe():
     engineTurn = False
     if random.randint(0,1) == 1:
         engineTurn = True
-
+    print("\nGAME BOARD")
     print('+---+---+---+')
     print('| 1 | 2 | 3 |')
     print('+---+---+---+')
@@ -48,17 +48,13 @@ def tictactoe():
 
 
     if engineTurn:
-        print("Engine making first move\n")
+        print("Engine making first move\n\n")
     else:
-        print("Player making first move\n")
+        print("Player making first move\n\n")
     
     while b.gameComplete(1) == False:
         if engineTurn:
             children = b.getChildren(1, True)
-
-            print(b)
-            print("Thinking... I have", len(children), "options.")
-
             bestEval = minimax(1, b, 10, True)
 
             if len(children) != 9: #For starting move we should start on a corner every time
@@ -110,7 +106,7 @@ def simulation():
         
 if __name__ == "__main__":   
     printMessage()
-    game_no = int(input("Enter number of game you would like to play: ").strip())
+    game_no = int(input("Enter the number of game you would like to play: ").strip())
 
     while(game_no != 0):
 
