@@ -35,9 +35,8 @@ def tictactoe():
     depth = 10 
     b = Board(3, 3)
     
-    engineTurn = False
-    if random.randint(0,1) == 1:
-        engineTurn = True
+    engineTurn = random.randint(0,1) == 1
+    
     print("\nGAME BOARD")
     print('+---+---+---+')
     print('| 1 | 2 | 3 |')
