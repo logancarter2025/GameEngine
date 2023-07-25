@@ -6,7 +6,7 @@ def printMessage():
     print("Enter number to indicate which game you would like to play (0 to stop)")
     print("0) Stop playing")
     print("1) Tic-Tac-Toe")
-    #print("2) Connect Four")
+    print("2) Connect Four")
     #print("3) Checkers")
     print()
 
@@ -85,6 +85,7 @@ def tictactoe():
      
 def connect4():
     b = Board(6, 7)
+    print(b)
 
 
 if __name__ == "__main__":   
