@@ -22,8 +22,6 @@ class Board(object):
         new.setBoard(self.board)
         return new
 
-
-
     def dropPiece(self, col):
         print("DropPiece needs to be implemented")
 
@@ -78,7 +76,13 @@ class Board(object):
 
         return children
     
-    #Engine maximizing, user minimizing
+    #NEED TO IMPLEMENT
+    def connect4children(self, engineTurn: bool) -> list:
+        print("connect4children need to implement")
+        arr = []
+        return arr
+
+    
     def tictactoeEval(self):
         #unfinished game is 'neutral' in tic-tac-toe
         if not self.tictactoeGameComplete():
@@ -116,16 +120,30 @@ class Board(object):
         
         return 0
         
+    #NEED TO IMPLEMENT
+    def connect4Eval(self):
+        print("connect4Eval need to implement")
+        return 0
+
+    #Engine maximizing, user minimizing
     def evalGame(self, game_no: int) -> int:
         if game_no == 1:
             return self.tictactoeEval() 
         
         return 0
         
+    
     def gameComplete(self, game_no):
         if game_no == 1:
-            return self.tictactoeGameComplete()               
+            return self.tictactoeGameComplete()          
+        elif game_no == 2:
+            return self.connect4Complete()            
         
+    #NEED TO IMPLEMENT
+    def connect4Complete(self):
+        print("connect4Complete need to implement")
+        return False
+    
     def tictactoeGameComplete(self):
 
         #Checking for 3 in a row

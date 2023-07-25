@@ -128,10 +128,13 @@ def connect4():
             print(b)
             col = int(input("what col would you like to place your piece: ").strip()) - 1
             b.dropPiece(col)
-            
+
         
         engineTurn = not engineTurn
 
+
+    print("Game Over")
+    print(b)
 
 
 if __name__ == "__main__":   
