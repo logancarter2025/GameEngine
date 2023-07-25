@@ -32,6 +32,7 @@ def minimax(game_no, board, depth, engineTurn: bool) -> int:
         return minEval
         
 def tictactoe():
+    depth = 10 
     b = Board(3, 3)
     
     engineTurn = False
@@ -55,7 +56,7 @@ def tictactoe():
     while b.gameComplete(1) == False:
         if engineTurn:
             children = b.getChildren(1, True)
-            bestEval = minimax(1, b, 10, True)
+            bestEval = minimax(1, b, depth, True)
 
             if len(children) != 9: #For starting move we should start on a corner every time
                 random.shuffle(children) #Engine is no longer deterministic
@@ -67,7 +68,7 @@ def tictactoe():
                 children = new_children
 
             for child in children:
-                eval = minimax(1, child, 10, False)
+                eval = minimax(1, child, depth-1, False)
                 if eval >= bestEval:
                     bestMove = child
                     break
@@ -84,6 +85,7 @@ def tictactoe():
     print(b)
      
 def connect4():
+    depth = 6
 
     print("\nGAME BOARD\n")
     print('| 1 | 2 | 3 | 4 | 5 | 6 | 7 |')
@@ -111,14 +113,14 @@ def connect4():
     while b.gameComplete(2) == False:
         if engineTurn:
             children = b.getChildren(2, True)
-            bestEval = minimax(2, b, 6, True)
+            bestEval = minimax(2, b, depth, True)
 
             
             random.shuffle(children) #Engine is no longer deterministic
 
 
             for child in children:
-                eval = minimax(2, child, 5, False)
+                eval = minimax(2, child, depth-1, False)
                 if eval >= bestEval:
                     bestMove = child
                     break
