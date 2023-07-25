@@ -24,9 +24,18 @@ class Board(object):
 
     def __str__(self):
         s = ''
-
         for i in range(self.numRows):
-            s += str(self.board[i]) + '\n'
+            for j in range(self.numCols):
+                s += "+---"
+            s += '+\n'
+            for j in range(self.numCols):
+                s += "| " + self.board[i][j] + " "
+
+            s += '+\n'
+
+        for i in range(self.numCols):
+            s += "+---"
+        s += '+\n'
 
         return s
 

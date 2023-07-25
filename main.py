@@ -85,7 +85,24 @@ def tictactoe():
      
 def connect4():
     b = Board(6, 7)
-    print(b)
+    engineTurn = False
+    if random.randint(0,1) == 1:
+        engineTurn = True
+
+    print("\nGAME BOARD")
+    print('| 1 | 2 | 3 | 4 | 5 | 6 | 7 |')
+    print('+---+---+---+---+---+---+---+')
+    print('|   |   |   |   |   |   |   |')
+    print('+---+---+---+---+---+---+---+')
+    print('|   |   |   |   |   |   |   |')
+    print('+---+---+---+---+---+---+---+')
+    print('| : | : | : | : | : | : | : |')
+    print('+---+---+---+---+---+---+---+')
+    print('|   |   |   |   |   |   |   |')
+    print('+---+---+---+---+---+---+---+\n')
+
+    
+
 
 
 if __name__ == "__main__":   
