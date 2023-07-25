@@ -81,7 +81,6 @@ class Board(object):
         print("connect4children need to implement")
         arr = []
         return arr
-
     
     def tictactoeEval(self):
         #unfinished game is 'neutral' in tic-tac-toe
@@ -131,7 +130,6 @@ class Board(object):
             return self.tictactoeEval() 
         
         return 0
-        
     
     def gameComplete(self, game_no):
         if game_no == 1:
