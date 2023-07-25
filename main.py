@@ -8,9 +8,11 @@ def printMessage():
     print("1) Tic-Tac-Toe")
     #print("2) Connect Four")
     #print("3) Checkers")
+    print()
 
+#STILL NEEDS ALPHA-BETA PRUNING
 def minimax(game_no, board, depth, engineTurn: bool) -> int:
-    if depth == 0 or board.gameComplete(1): 
+    if depth == 0 or board.gameComplete(game_no): 
         return board.evalGame(game_no)
     
     if engineTurn:
@@ -36,9 +38,7 @@ def tictactoe():
     engineTurn = False
     if random.randint(0,1) == 1:
         engineTurn = True
-    
 
-    #engineTurn = True
     if engineTurn:
         print("Engine making first move")
     else:
@@ -48,8 +48,18 @@ def tictactoe():
     while b.gameComplete(1) == False:
         if engineTurn:
             children = b.getChildren(1, True)
-            print("I have", len(children), "children")
             bestEval = minimax(1, b, 10, True)
+
+            print("Thinking... I have", len(children), "options.")
+            if len(children) != 9: #For starting move we should start on a corner every time
+                random.shuffle(children) #Engine is no longer deterministic
+
+            else:
+                new_children = [children[0], children[2], children[6], children[8]]
+                random.shuffle(new_children)
+                #We will randomly pick which corner to choose if we go first
+                children = new_children
+
             for child in children:
                 eval = minimax(1, child, 10, False)
                 if eval >= bestEval:
@@ -88,8 +98,6 @@ def simulation():
         print(b.evalGame(1))
         print(b)
         
-
-
 if __name__ == "__main__":   
     printMessage()
     game_no = int(input("Enter number of game you would like to play: ").strip())
@@ -97,7 +105,6 @@ if __name__ == "__main__":
     while(game_no != 0):
 
         if game_no == 1:
-            #print("You are now playing tic-tac-toe")
             tictactoe()
 
         printMessage()
