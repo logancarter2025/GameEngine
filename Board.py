@@ -22,6 +22,11 @@ class Board(object):
         new.setBoard(self.board)
         return new
 
+
+
+    def dropPiece(self, col):
+        print("DropPiece needs to be implemented")
+
     def __str__(self):
         s = ''
         for i in range(self.numRows):

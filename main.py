@@ -84,10 +84,6 @@ def tictactoe():
     print(b)
      
 def connect4():
-    b = Board(6, 7)
-    engineTurn = False
-    if random.randint(0,1) == 1:
-        engineTurn = True
 
     print("\nGAME BOARD\n")
     print('| 1 | 2 | 3 | 4 | 5 | 6 | 7 |')
@@ -102,10 +98,39 @@ def connect4():
     print('+---+---+---+---+---+---+---+\n')
 
 
-    print('\n\n\n\n')
-    print(b)
+    b = Board(6, 7)
+    engineTurn = random.randint(0,1) == 1
 
-    
+    if engineTurn:
+        print("Engine making first move\n\n")
+    else:
+        print("Player making first move\n\n")
+
+
+
+    while b.gameComplete(2) == False:
+        if engineTurn:
+            children = b.getChildren(2, True)
+            bestEval = minimax(2, b, 6, True)
+
+            
+            random.shuffle(children) #Engine is no longer deterministic
+
+
+            for child in children:
+                eval = minimax(2, child, 5, False)
+                if eval >= bestEval:
+                    bestMove = child
+                    break
+            b = bestMove
+
+        else: # user turn
+            print(b)
+            col = int(input("what col would you like to place your piece: ").strip()) - 1
+            b.dropPiece(col)
+            
+        
+        engineTurn = not engineTurn
 
 
 
