@@ -31,7 +31,7 @@ class Board(object):
             for j in range(self.numCols):
                 s += "| " + self.board[i][j] + " "
 
-            s += '+\n'
+            s += '|\n'
 
         for i in range(self.numCols):
             s += "+---"

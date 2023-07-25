@@ -89,7 +89,7 @@ def connect4():
     if random.randint(0,1) == 1:
         engineTurn = True
 
-    print("\nGAME BOARD")
+    print("\nGAME BOARD\n")
     print('| 1 | 2 | 3 | 4 | 5 | 6 | 7 |')
     print('+---+---+---+---+---+---+---+')
     print('|   |   |   |   |   |   |   |')
@@ -100,6 +100,10 @@ def connect4():
     print('+---+---+---+---+---+---+---+')
     print('|   |   |   |   |   |   |   |')
     print('+---+---+---+---+---+---+---+\n')
+
+
+    print('\n\n\n\n')
+    print(b)
 
     
 
