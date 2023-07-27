@@ -139,8 +139,24 @@ class Board(object):
         
     #NEED TO IMPLEMENT
     def connect4Complete(self):
-        print("connect4Complete need to implement")
-        return False
+        #Check for horizontal wins
+
+
+        #Check for vertical wins
+
+
+        #Check for wins in '/' direction
+
+
+        #Check for wins in '\' direction
+
+
+        #If no win, check to see if top of the board is full
+        for i in range(self.numCols):
+            if self.board[0][i] == ' ':
+                return False
+        
+        return True
     
     def tictactoeGameComplete(self):
 
