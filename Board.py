@@ -149,7 +149,7 @@ class Board(object):
         #Check for vertical wins
         for i in range(self.numRows - 3):
             for j in range(self.numCols):
-                if self.board[i][j] != ' ' and ():
+                if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j] == self.board[i+2][j] == self.board[i+3][j]):
                     return True
 
 
@@ -157,6 +157,11 @@ class Board(object):
 
 
         #Check for wins in '\' direction
+        for i in range(self.numRows - 3):
+            for j in range(self.numCols - 3):
+                if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2] == self.board[i+3][j+3]):
+                    return True
+            
 
 
         #If no win, check to see if top of the board is full
