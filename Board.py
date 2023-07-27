@@ -159,19 +159,19 @@ class Board(object):
         for i in range(self.numRows - 3):
             for j in range(self.numCols):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j] == self.board[i+2][j] == self.board[i+3][j]):
-                    return 1000 if self.board[j][i] == 'o' else -1000
+                    return 1000 if self.board[i][j] == 'o' else -1000
                 
         #Check for wins in '\' direction
         for i in range(self.numRows - 3):
             for j in range(self.numCols - 3):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2] == self.board[i+3][j+3]):
-                    return 1000 if self.board[j][i] == 'o' else -1000
+                    return 1000 if self.board[i][j] == 'o' else -1000
 
         #Check for wins in '/' direction
         for i in range(self.numRows - 1, 2, -1):
             for j in range(self.numCols - 3):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i-1][j+1] == self.board[i-2][j+2] == self.board[i-3][j+3]):
-                    return 1000 if self.board[j][i] == 'o' else -1000
+                    return 1000 if self.board[i][j] == 'o' else -1000
 
         #If there's no win yet, then we have to do a different way of scoring
         score = 0
@@ -196,20 +196,19 @@ class Board(object):
         for i in range(self.numRows - 2):
             for j in range(self.numCols):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j] == self.board[i+2][j]):
-                    score = score + 50 if self.board[j][i] == 'o' else score - 50
+                    score = score + 50 if self.board[i][j] == 'o' else score - 50
 
         # '\' direction
         for i in range(self.numRows - 2):
             for j in range(self.numCols - 2):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2]):
-                    score = score + 50 if self.board[j][i] == 'o' else score - 50
+                    score = score + 50 if self.board[i][j] == 'o' else score - 50
 
-
-
-
-
-
-
+        # '/' direction
+        for i in range(self.numRows - 1, 1, -1):
+            for j in range(self.numCols - 2):
+                if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i-1][j+1] == self.board[i-2][j+2]):
+                    score = score + 50 if self.board[i][j] == 'o' else score - 50
 
         return score
 
