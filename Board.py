@@ -22,8 +22,12 @@ class Board(object):
         new.setBoard(self.board)
         return new
 
-    def dropPiece(self, col):
-        print("DropPiece needs to be implemented")
+    def dropPiece(self, col: int, engineTurn: bool) -> None:
+        for i in range(self.numRows - 1, -1, -1):
+            if self.board[i][col] == ' ':
+                self.board[i][col] = 'o' if engineTurn else 'x'
+                break
+
 
     def __str__(self):
         s = ''
@@ -152,15 +156,19 @@ class Board(object):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j] == self.board[i+2][j] == self.board[i+3][j]):
                     return True
 
-
-        #Check for wins in '/' direction
-
-
         #Check for wins in '\' direction
+        for i in range(self.numRows - 3):
+            for j in range(self.numCols - 3):
+                if self.board[i][j] != ' ' and (self.board[i][self.numCols - j - 1] == self.board[i+1][self.numCols - (j+1) - 1] == self.board[i+2][self.numCols - (j+2) - 1] == self.board[i+3][self.numCols - (j+3) - 1]):
+                    return True
+                
+        
+        #Check for wins in '/' direction
         for i in range(self.numRows - 3):
             for j in range(self.numCols - 3):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2] == self.board[i+3][j+3]):
                     return True
+
             
 
 
