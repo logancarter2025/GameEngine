@@ -140,9 +140,17 @@ class Board(object):
     #NEED TO IMPLEMENT
     def connect4Complete(self):
         #Check for horizontal wins
+        for i in range(self.numCols - 3):
+            for j in range(self.numRows):
+                if self.board[j][i] != ' ' and (self.board[j][i] == self.board[j][i+1] == self.board[j][i+2] == self.board[j][i+3]):
+                    return True
 
 
         #Check for vertical wins
+        for i in range(self.numRows - 3):
+            for j in range(self.numCols):
+                if self.board[i][j] != ' ' and ():
+                    return True
 
 
         #Check for wins in '/' direction
