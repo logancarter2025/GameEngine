@@ -87,7 +87,7 @@ def tester():
     b = Board(6, 7)
     engineTurn = False
 
-    if False: # / test
+    if True: # / test
         b.changeVal(5, 0, 'x')
         b.changeVal(4, 1, 'x')
         b.changeVal(3, 2, 'x')
@@ -96,7 +96,7 @@ def tester():
         b.changeVal(4, 3, 'o')
         b.changeVal(3, 3, 'o')
 
-    if True: # \ test
+    if False: # \ test
         b.changeVal(5, 3, 'x')
         b.changeVal(4, 2, 'x')
         b.changeVal(3, 1, 'x')
@@ -148,7 +148,6 @@ def connect4():
         if engineTurn:
             children = b.getChildren(2, True)
             bestEval = minimax(2, b, depth, True)
-
             
             random.shuffle(children) #Engine is no longer deterministic
 
@@ -178,15 +177,11 @@ if __name__ == "__main__":
     game_no = int(input("Enter the number of game you would like to play: ").strip())
 
     while(game_no != 0):
-        game_no = 3
         if game_no == 1:
             tictactoe()
 
         elif game_no == 2:
             connect4()
-
-        elif game_no == 3:
-            tester()
 
         printMessage()
         game_no = int(input("Enter number of game you would like to play: ").strip())

@@ -17,6 +17,14 @@ class Board(object):
     def setBoard(self, otherBoard):
         self.board = [row[:] for row in otherBoard]
 
+    def hash(self) -> int:
+        s = ""
+        for i in range(self.numRows):
+            s += ''.join([item for item in self.board[i]])
+            s += "\n"
+
+        return hash(s)
+
     def new_copy(self):
         new = Board(self.numRows, self.numCols)
         new.setBoard(self.board)
@@ -27,7 +35,6 @@ class Board(object):
             if self.board[i][col] == ' ':
                 self.board[i][col] = 'o' if engineTurn else 'x'
                 break
-
 
     def __str__(self):
         s = ''
@@ -56,8 +63,8 @@ class Board(object):
         if game_no == 1:
             return self.tictactoeChildren(engineTurn) 
 
-    def tictactoeChildren(self, engineTurn: bool) -> list: 
-        children = []
+    def tictactoeChildren(self, engineTurn: bool) -> set: 
+        children = set()
 
         for i in range(self.numRows):
             for j in range(self.numCols):
@@ -75,16 +82,26 @@ class Board(object):
                     else:
                         child.changeVal(i, j, 'x')
                 
-                    children.append(child)
+                    children.add(child)
 
 
         return children
     
     #NEED TO IMPLEMENT
-    def connect4children(self, engineTurn: bool) -> list:
-        print("connect4children need to implement")
-        arr = []
-        return arr
+    def connect4children(self, engineTurn: bool) -> set:
+        children = set()
+
+
+        for i in range(self.numCols):
+            if self.board[0][i] == ' ':
+                child = self.new_copy()
+                child.dropPiece(i, engineTurn)
+                children.add(child)
+
+
+
+
+        return children
     
     def tictactoeEval(self):
         #unfinished game is 'neutral' in tic-tac-toe
@@ -161,17 +178,18 @@ class Board(object):
         #Check for wins in '\' direction
         for i in range(self.numRows - 3):
             for j in range(self.numCols - 3):
-                if self.board[i][j] != ' ' and (self.board[i][self.numCols - j ] == self.board[i+1][self.numCols - (j+1) ] == self.board[i+2][self.numCols - (j+2) ] == self.board[i+3][self.numCols - (j+3) ]):
+                if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2] == self.board[i+3][j+3]):
                     print(" \ win, game over")
                     return True
                 
         
         #Check for wins in '/' direction
-        for i in range(self.numRows - 3):
-            for j in range(self.numCols - 3):
-                if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2] == self.board[i+3][j+3]):
-                    print(" / win, game over")
-                    return True
+        if True:
+            for i in range(self.numRows - 1, 2, -1):
+                for j in range(self.numCols - 3):
+                    if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i-1][j+1] == self.board[i-2][j+2] == self.board[i-3][j+3]):
+                        print(" / win, game over")
+                        return True
 
             
 
