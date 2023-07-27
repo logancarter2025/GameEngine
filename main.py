@@ -83,6 +83,31 @@ def tictactoe():
     print("Game Over")
     print(b)
      
+
+
+def tester():
+    b = Board(6, 7)
+    engineTurn = random.randint(0,1) == 1
+
+    if engineTurn:
+        print("Engine making first move\n\n")
+    else:
+        print("Player making first move\n\n")
+
+
+    while b.gameComplete(2) == False:
+        
+        col = int(input("What column to place piece: ").strip()) - 1
+        b.dropPiece(col, engineTurn)
+        print(b, end = "\n\n")
+        engineTurn = not engineTurn
+
+    print("Game over")
+    print(b)
+
+
+
+
 def connect4():
     depth = 6
 
@@ -143,12 +168,15 @@ if __name__ == "__main__":
     game_no = int(input("Enter the number of game you would like to play: ").strip())
 
     while(game_no != 0):
-
+        game_no = 3
         if game_no == 1:
             tictactoe()
 
         elif game_no == 2:
             connect4()
+
+        elif game_no == 3:
+            tester()
 
         printMessage()
         game_no = int(input("Enter number of game you would like to play: ").strip())

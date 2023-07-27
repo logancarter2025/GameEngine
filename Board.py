@@ -147,6 +147,7 @@ class Board(object):
         for i in range(self.numCols - 3):
             for j in range(self.numRows):
                 if self.board[j][i] != ' ' and (self.board[j][i] == self.board[j][i+1] == self.board[j][i+2] == self.board[j][i+3]):
+                    print(" - win, game over")
                     return True
 
 
@@ -154,12 +155,14 @@ class Board(object):
         for i in range(self.numRows - 3):
             for j in range(self.numCols):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j] == self.board[i+2][j] == self.board[i+3][j]):
+                    print(" | win, game over")
                     return True
 
         #Check for wins in '\' direction
         for i in range(self.numRows - 3):
             for j in range(self.numCols - 3):
-                if self.board[i][j] != ' ' and (self.board[i][self.numCols - j - 1] == self.board[i+1][self.numCols - (j+1) - 1] == self.board[i+2][self.numCols - (j+2) - 1] == self.board[i+3][self.numCols - (j+3) - 1]):
+                if self.board[i][j] != ' ' and (self.board[i][self.numCols - j ] == self.board[i+1][self.numCols - (j+1) ] == self.board[i+2][self.numCols - (j+2) ] == self.board[i+3][self.numCols - (j+3) ]):
+                    print(" \ win, game over")
                     return True
                 
         
@@ -167,6 +170,7 @@ class Board(object):
         for i in range(self.numRows - 3):
             for j in range(self.numCols - 3):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2] == self.board[i+3][j+3]):
+                    print(" / win, game over")
                     return True
 
             
@@ -174,9 +178,10 @@ class Board(object):
 
         #If no win, check to see if top of the board is full
         for i in range(self.numCols):
-            if self.board[0][i] == ' ':
+            if self.board[0][i] == ' ':       
                 return False
         
+        print("Board full, game over")
         return True
     
     def tictactoeGameComplete(self):
