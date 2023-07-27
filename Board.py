@@ -61,10 +61,12 @@ class Board(object):
 
     def getChildren(self, game_no: int, engineTurn: bool) -> list:
         if game_no == 1:
-            return self.tictactoeChildren(engineTurn) 
+            return self.tictactoeChildren(engineTurn)
+        elif game_no == 2:
+            return self.connect4children(engineTurn) 
 
-    def tictactoeChildren(self, engineTurn: bool) -> set: 
-        children = set()
+    def tictactoeChildren(self, engineTurn: bool) -> list: 
+        children = []
 
         for i in range(self.numRows):
             for j in range(self.numCols):
@@ -82,12 +84,11 @@ class Board(object):
                     else:
                         child.changeVal(i, j, 'x')
                 
-                    children.add(child)
+                    children.append(child)
 
 
         return children
     
-    #NEED TO IMPLEMENT
     def connect4children(self, engineTurn: bool) -> set:
         children = set()
 
@@ -142,14 +143,15 @@ class Board(object):
         
     #NEED TO IMPLEMENT
     def connect4Eval(self):
-        print("connect4Eval need to implement")
+        
         return 0
 
     #Engine maximizing, user minimizing
     def evalGame(self, game_no: int) -> int:
         if game_no == 1:
             return self.tictactoeEval() 
-        
+        elif game_no == 2:
+            return self.connect4Eval()
         return 0
     
     def gameComplete(self, game_no):
@@ -158,13 +160,12 @@ class Board(object):
         elif game_no == 2:
             return self.connect4Complete()            
         
-    #NEED TO IMPLEMENT
     def connect4Complete(self):
         #Check for horizontal wins
         for i in range(self.numCols - 3):
             for j in range(self.numRows):
                 if self.board[j][i] != ' ' and (self.board[j][i] == self.board[j][i+1] == self.board[j][i+2] == self.board[j][i+3]):
-                    print(" - win, game over")
+                    #print(" - win, game over")
                     return True
 
 
@@ -172,14 +173,14 @@ class Board(object):
         for i in range(self.numRows - 3):
             for j in range(self.numCols):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j] == self.board[i+2][j] == self.board[i+3][j]):
-                    print(" | win, game over")
+                    #print(" | win, game over")
                     return True
 
         #Check for wins in '\' direction
         for i in range(self.numRows - 3):
             for j in range(self.numCols - 3):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2] == self.board[i+3][j+3]):
-                    print(" \ win, game over")
+                    #print(" \ win, game over")
                     return True
                 
         
@@ -188,7 +189,7 @@ class Board(object):
             for i in range(self.numRows - 1, 2, -1):
                 for j in range(self.numCols - 3):
                     if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i-1][j+1] == self.board[i-2][j+2] == self.board[i-3][j+3]):
-                        print(" / win, game over")
+                        #print(" / win, game over")
                         return True
 
             
@@ -199,7 +200,7 @@ class Board(object):
             if self.board[0][i] == ' ':       
                 return False
         
-        print("Board full, game over")
+        #print("Board full, game over")
         return True
     
     def tictactoeGameComplete(self):
@@ -210,6 +211,7 @@ class Board(object):
         for i in range(self.numRows):
             if self.board[i][0] == self.board[i][1] and self.board[i][0] == self.board[i][2] and self.board[i][0] != ' ':
                 #print("Game complete 0")
+                
                 return True
             
         #Checking for vertical connections

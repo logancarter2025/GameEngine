@@ -60,7 +60,7 @@ def tictactoe():
             if len(children) != 9: #For starting move we should start on a corner every time
                 random.shuffle(children) #Engine is no longer deterministic
 
-            else:
+            if len(children) == 9:
                 new_children = [children[0], children[2], children[6], children[8]]
                 random.shuffle(new_children)
                 #We will randomly pick which corner to choose if we go first
@@ -148,9 +148,6 @@ def connect4():
         if engineTurn:
             children = b.getChildren(2, True)
             bestEval = minimax(2, b, depth, True)
-            
-            random.shuffle(children) #Engine is no longer deterministic
-
 
             for child in children:
                 eval = minimax(2, child, depth-1, False)
@@ -162,7 +159,7 @@ def connect4():
         else: # user turn
             print(b)
             col = int(input("what col would you like to place your piece: ").strip()) - 1
-            b.dropPiece(col)
+            b.dropPiece(col, engineTurn)
 
         
         engineTurn = not engineTurn
