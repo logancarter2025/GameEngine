@@ -143,8 +143,75 @@ class Board(object):
         
     #NEED TO IMPLEMENT
     def connect4Eval(self):
+        '''
+        maybe 1 point outer column per piece, 2, 3, then 4 for middle column, respectively
+        1000 points for 4 in a row
+        50 points per 3 in a row
+        '''
+
+        #Horizontal Win check
+        for i in range(self.numCols - 3):
+            for j in range(self.numRows):
+                if self.board[j][i] != ' ' and (self.board[j][i] == self.board[j][i+1] == self.board[j][i+2] == self.board[j][i+3]):
+                    return 1000 if self.board[j][i] == 'o' else -1000
+
+        #Vertical Win check
+        for i in range(self.numRows - 3):
+            for j in range(self.numCols):
+                if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j] == self.board[i+2][j] == self.board[i+3][j]):
+                    return 1000 if self.board[j][i] == 'o' else -1000
+                
+        #Check for wins in '\' direction
+        for i in range(self.numRows - 3):
+            for j in range(self.numCols - 3):
+                if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2] == self.board[i+3][j+3]):
+                    return 1000 if self.board[j][i] == 'o' else -1000
+
+        #Check for wins in '/' direction
+        for i in range(self.numRows - 1, 2, -1):
+            for j in range(self.numCols - 3):
+                if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i-1][j+1] == self.board[i-2][j+2] == self.board[i-3][j+3]):
+                    return 1000 if self.board[j][i] == 'o' else -1000
+
+        #If there's no win yet, then we have to do a different way of scoring
+        score = 0
+        score_decrements = {0: 1, 1: 2, 2: 3, 3: 4, 4: 3, 5: 2, 6: 1}
+        for i in range(self.numRows):
+            for j in range(self.numCols):
+                if self.board[i][j] == 'x':
+                    score -= score_decrements[j]
+                elif self.board[i][j] == 'o':
+                    score += score_decrements[j]                   
+
+
+        #Checking for 3 in a row:
+
+        #Horizontal check
+        for i in range(self.numCols - 2):
+            for j in range(self.numRows):
+                if self.board[j][i] != ' ' and (self.board[j][i] == self.board[j][i+1] == self.board[j][i+2]):
+                    score = score + 50 if self.board[j][i] == 'o' else score - 50
         
-        return 0
+        #Vertical check
+        for i in range(self.numRows - 2):
+            for j in range(self.numCols):
+                if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j] == self.board[i+2][j]):
+                    score = score + 50 if self.board[j][i] == 'o' else score - 50
+
+        # '\' direction
+        for i in range(self.numRows - 2):
+            for j in range(self.numCols - 2):
+                if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2]):
+                    score = score + 50 if self.board[j][i] == 'o' else score - 50
+
+
+
+
+
+
+
+
+        return score
 
     #Engine maximizing, user minimizing
     def evalGame(self, game_no: int) -> int:
