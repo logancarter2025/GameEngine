@@ -82,25 +82,35 @@ def tictactoe():
 
     print("Game Over")
     print(b)
-     
-
 
 def tester():
     b = Board(6, 7)
-    engineTurn = random.randint(0,1) == 1
+    engineTurn = False
 
-    if engineTurn:
-        print("Engine making first move\n\n")
-    else:
-        print("Player making first move\n\n")
+    if False: # / test
+        b.changeVal(5, 0, 'x')
+        b.changeVal(4, 1, 'x')
+        b.changeVal(3, 2, 'x')
 
+        b.changeVal(5, 3, 'o')
+        b.changeVal(4, 3, 'o')
+        b.changeVal(3, 3, 'o')
+
+    if True: # \ test
+        b.changeVal(5, 3, 'x')
+        b.changeVal(4, 2, 'x')
+        b.changeVal(3, 1, 'x')
+
+        b.changeVal(5, 0, 'o')
+        b.changeVal(4, 0, 'o')
+        b.changeVal(3, 0, 'o')
 
     while b.gameComplete(2) == False:
         
         col = int(input("What column to place piece: ").strip()) - 1
         b.dropPiece(col, engineTurn)
         print(b, end = "\n\n")
-        engineTurn = not engineTurn
+        #engineTurn = not engineTurn
 
     print("Game over")
     print(b)
