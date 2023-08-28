@@ -10,8 +10,7 @@ def printMessage():
     #print("3) Checkers")
     print()
 
-#STILL NEEDS ALPHA-BETA PRUNING
-def minimax(game_no, board, depth, engineTurn: bool) -> int:
+def minimax(game_no, board, depth, engineTurn: bool, alpha, beta) -> int:
     if depth == 0 or board.gameComplete(game_no): 
         return board.evalGame(game_no)
     
@@ -19,16 +18,22 @@ def minimax(game_no, board, depth, engineTurn: bool) -> int:
         maxEval = -math.inf
         children = board.getChildren(game_no, True)
         for child in children:
-            eval = minimax(game_no, child, depth - 1, False)
+            eval = minimax(game_no, child, depth - 1, False, alpha, beta)
             maxEval = max(maxEval, eval)
+            alpha = max(alpha, eval)
+            if beta <= alpha:  # If beta is less than or equal to alpha, prune the remaining branches
+                break
         return maxEval
     
     else:
         minEval = math.inf
         children = board.getChildren(game_no, False)
         for child in children:
-            eval = minimax(game_no, child, depth - 1, True)
+            eval = minimax(game_no, child, depth - 1, True, alpha, beta)
             minEval = min(minEval, eval)
+            beta = min(beta, eval)  # Update beta
+            if beta <= alpha:  # If beta is less than or equal to alpha, prune the remaining branches
+                break
         return minEval
         
 def tictactoe():
@@ -55,7 +60,7 @@ def tictactoe():
     while b.gameComplete(1) == False:
         if engineTurn:
             children = b.getChildren(1, True)
-            bestEval = minimax(1, b, depth, True)
+            bestEval = minimax(1, b, depth, True, -math.inf, math.inf)
 
             if len(children) != 9: #For starting move we should start on a corner every time
                 random.shuffle(children) #Engine is no longer deterministic
@@ -67,7 +72,7 @@ def tictactoe():
                 children = new_children
 
             for child in children:
-                eval = minimax(1, child, depth-1, False)
+                eval = minimax(1, child, depth-1, False, -math.inf, math.inf)
                 if eval >= bestEval:
                     bestMove = child
                     break
@@ -115,11 +120,8 @@ def tester():
     print("Game over")
     print(b)
 
-
-
-
 def connect4():
-    depth = 6
+    depth = 8
 
     print("\nGAME BOARD\n")
     print('| 1 | 2 | 3 | 4 | 5 | 6 | 7 |')
@@ -142,21 +144,20 @@ def connect4():
     else:
         print("Player making first move\n\n")
 
-
-
     while b.gameComplete(2) == False:
         if engineTurn:
             children = b.getChildren(2, True)
-            bestEval = minimax(2, b, depth, True)
+            bestEval = minimax(2, b, depth, True, -math.inf, math.inf)
 
             for child in children:
-                eval = minimax(2, child, depth-1, False)
+                eval = minimax(2, child, depth-1, False, -math.inf, math.inf)
                 if eval >= bestEval:
                     bestMove = child
                     break
             b = bestMove
 
         else: # user turn
+            print('| 1 | 2 | 3 | 4 | 5 | 6 | 7 |')
             print(b)
             col = int(input("what col would you like to place your piece: ").strip()) - 1
             b.dropPiece(col, engineTurn)
