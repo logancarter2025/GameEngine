@@ -7,7 +7,7 @@ def printMessage():
     print("0) Stop playing")
     print("1) Tic-Tac-Toe")
     print("2) Connect Four")
-    #print("3) Checkers")
+    print("3) Checkers")
     print()
 
 def minimax(game_no, board, depth, engineTurn: bool, alpha, beta) -> int:
@@ -88,7 +88,6 @@ def tictactoe():
     print("Game Over")
     print(b)
 
-def tester():
     b = Board(6, 7)
     engineTurn = False
 
@@ -170,6 +169,46 @@ def connect4():
     print(b)
 
 
+def checkers():
+    depth = 4
+    b = Board(8, 8)
+    engineTurn = random.randint(0,1) == 1
+    
+    b.place_pieces(3)
+
+    if engineTurn:
+        print("Engine making first move\n\n")
+    else:
+        print("Player making first move\n\n")
+        
+        
+    while b.gameComplete(3) == False:
+        if engineTurn:
+            children = b.getChildren(3, True)
+            bestEval = minimax(3, b, depth, True, -math.inf, math.inf)
+
+            for child in children:
+                eval = minimax(3, child, depth-1, False, -math.inf, math.inf)
+                if eval >= bestEval:
+                    bestMove = child
+                    break
+            b = bestMove
+
+        else: # user turn
+            print(b)
+            
+            col = int(input("what col would you like to place your piece: ").strip()) - 1
+            
+            b.dropPiece(col, engineTurn)
+
+        
+        engineTurn = not engineTurn
+
+
+    print("Game Over")
+    print(b)
+    
+
 if __name__ == "__main__":   
     printMessage()
     game_no = int(input("Enter the number of game you would like to play: ").strip())
@@ -180,6 +219,9 @@ if __name__ == "__main__":
 
         elif game_no == 2:
             connect4()
+            
+        elif game_no == 3:
+            checkers()
 
         printMessage()
         game_no = int(input("Enter number of game you would like to play: ").strip())

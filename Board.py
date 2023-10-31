@@ -1,4 +1,5 @@
 import copy
+import math
 
 class Board(object):
     def __init__(self, numRows, numCols):
@@ -24,6 +25,13 @@ class Board(object):
             s += "\n"
 
         return hash(s)
+
+
+    def place_pieces(self, game_no):
+        if game_no == 3: #checkers
+            print('setting board')
+            print(self)
+                
 
     def new_copy(self):
         new = Board(self.numRows, self.numCols)
@@ -141,7 +149,6 @@ class Board(object):
         
         return 0
         
-    #NEED TO IMPLEMENT
     def connect4Eval(self):
         '''
         maybe 1 point outer column per piece, 2, 3, then 4 for middle column, respectively
@@ -153,25 +160,25 @@ class Board(object):
         for i in range(self.numCols - 3):
             for j in range(self.numRows):
                 if self.board[j][i] != ' ' and (self.board[j][i] == self.board[j][i+1] == self.board[j][i+2] == self.board[j][i+3]):
-                    return 1000 if self.board[j][i] == 'o' else -1000
+                    return math.inf if self.board[j][i] == 'o' else -math.inf
 
         #Vertical Win check
         for i in range(self.numRows - 3):
             for j in range(self.numCols):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j] == self.board[i+2][j] == self.board[i+3][j]):
-                    return 1000 if self.board[i][j] == 'o' else -1000
+                    return math.inf if self.board[i][j] == 'o' else -math.inf
                 
         #Check for wins in '\' direction
         for i in range(self.numRows - 3):
             for j in range(self.numCols - 3):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2] == self.board[i+3][j+3]):
-                    return 1000 if self.board[i][j] == 'o' else -1000
+                    return math.inf if self.board[i][j] == 'o' else -math.inf
 
         #Check for wins in '/' direction
         for i in range(self.numRows - 1, 2, -1):
             for j in range(self.numCols - 3):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i-1][j+1] == self.board[i-2][j+2] == self.board[i-3][j+3]):
-                    return 1000 if self.board[i][j] == 'o' else -1000
+                    return math.inf if self.board[i][j] == 'o' else -math.inf
 
         #If there's no win yet, then we have to do a different way of scoring
         score = 0
@@ -218,20 +225,49 @@ class Board(object):
             return self.tictactoeEval() 
         elif game_no == 2:
             return self.connect4Eval()
+        
+        elif game_no == 3:
+            return self.checkersEval()
         return 0
     
     def gameComplete(self, game_no):
         if game_no == 1:
             return self.tictactoeGameComplete()          
         elif game_no == 2:
-            return self.connect4Complete()            
+            return self.connect4Complete()    
+        
+        elif game_no == 1:
+            return self.checkersComplete()
+        
+        
+        return True         
+        
+    def checkersComplete(self):
+        o_left = False
+        x_left = False
+        for i in range(self.numRows):
+            for j in range(self.numCols):
+                if self.board[i][j] == 'o' or self.board[i][j] == 'O':
+                    o_left = True
+                if self.board[i][j] == 'x' or self.board[i][j] == 'X':
+                    x_left = True
+                
+                if o_left and x_left:
+                    return False
+                
+        return True
+        
+        
+        
+        
+        
         
     def connect4Complete(self):
         #Check for horizontal wins
         for i in range(self.numCols - 3):
             for j in range(self.numRows):
                 if self.board[j][i] != ' ' and (self.board[j][i] == self.board[j][i+1] == self.board[j][i+2] == self.board[j][i+3]):
-                    #print(" - win, game over")
+                    # - win, game over
                     return True
 
 
@@ -239,14 +275,14 @@ class Board(object):
         for i in range(self.numRows - 3):
             for j in range(self.numCols):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j] == self.board[i+2][j] == self.board[i+3][j]):
-                    #print(" | win, game over")
+                    # | win, game over
                     return True
 
         #Check for wins in '\' direction
         for i in range(self.numRows - 3):
             for j in range(self.numCols - 3):
                 if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i+1][j+1] == self.board[i+2][j+2] == self.board[i+3][j+3]):
-                    #print(" \ win, game over")
+                    # \ win, game over
                     return True
                 
         
@@ -255,7 +291,7 @@ class Board(object):
             for i in range(self.numRows - 1, 2, -1):
                 for j in range(self.numCols - 3):
                     if self.board[i][j] != ' ' and (self.board[i][j] == self.board[i-1][j+1] == self.board[i-2][j+2] == self.board[i-3][j+3]):
-                        #print(" / win, game over")
+                        # / win, game over
                         return True
 
             
@@ -266,7 +302,7 @@ class Board(object):
             if self.board[0][i] == ' ':       
                 return False
         
-        #print("Board full, game over")
+        #Board full, game over
         return True
     
     def tictactoeGameComplete(self):
@@ -276,14 +312,11 @@ class Board(object):
         #Checking for horizonal connections
         for i in range(self.numRows):
             if self.board[i][0] == self.board[i][1] and self.board[i][0] == self.board[i][2] and self.board[i][0] != ' ':
-                #print("Game complete 0")
-                
                 return True
             
         #Checking for vertical connections
         for i in range(self.numCols):
             if self.board[0][i] == self.board[1][i] and self.board[0][i] == self.board[2][i] and self.board[0][i] != ' ':
-                #print("Game complete 1")
                 return True
         
         #Checking for main diagonal connection
@@ -292,7 +325,6 @@ class Board(object):
         
         #Checking for other diagonal connection
         if self.board[2][0] == self.board[1][1] and self.board[2][0] == self.board[0][2] and self.board[2][0] != ' ':
-            #print("Game complete 2")
             return True
         
         #Checking for full board
