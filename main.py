@@ -168,20 +168,20 @@ def connect4():
     print("Game Over")
     print(b)
 
-
 def checkers():
     depth = 4
     b = Board(8, 8)
     engineTurn = random.randint(0,1) == 1
     
     b.place_pieces(3)
-
+    
+    
     if engineTurn:
         print("Engine making first move\n\n")
     else:
         print("Player making first move\n\n")
         
-        
+    
     while b.gameComplete(3) == False:
         if engineTurn:
             children = b.getChildren(3, True)
@@ -195,11 +195,24 @@ def checkers():
             b = bestMove
 
         else: # user turn
+            
             print(b)
-            
-            col = int(input("what col would you like to place your piece: ").strip()) - 1
-            
-            b.dropPiece(col, engineTurn)
+            while True:
+                
+                print(b)
+                
+                row = int(input("what row is the piece that you would like to move").strip())
+                col = int(input("what col is the piece that you would like to move").strip())
+                
+                row_move = int(input("what row would you like to move it to").strip())
+                col_move = int(input("what col would you like to move it to").strip())
+                
+                if b.checkersValidMove(row, col, row_move, col_move):
+                    break
+                
+                print("Invalid move, try again")
+                
+                
 
         
         engineTurn = not engineTurn
@@ -208,12 +221,14 @@ def checkers():
     print("Game Over")
     print(b)
     
+    
 
 if __name__ == "__main__":   
     printMessage()
-    game_no = int(input("Enter the number of game you would like to play: ").strip())
-
+    game_no = -1
+    
     while(game_no != 0):
+        game_no = int(input("Enter the number of game you would like to play: ").strip())
         if game_no == 1:
             tictactoe()
 

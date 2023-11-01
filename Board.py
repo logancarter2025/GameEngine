@@ -12,12 +12,15 @@ class Board(object):
         for i in range(numRows):
             self.board.append(row[:])
     
+    #Returns current state of boards
     def getBoard(self):
         return self.board
 
+    #Copeis board given another board
     def setBoard(self, otherBoard):
         self.board = [row[:] for row in otherBoard]
 
+    #Hashes board
     def hash(self) -> int:
         s = ""
         for i in range(self.numRows):
@@ -26,18 +29,34 @@ class Board(object):
 
         return hash(s)
 
+    #Sets up initial board for checkers game
+    def checkersPlacePieces(self):
+        for i in range(3):
+            for j in range(self.numCols):
+                if (i + j)%2 == 1:
+                    self.changeVal(i, j, 'o')
+        
+        for i in range(5, 8):
+            for j in range(self.numCols):
+                if (i + j)%2 == 1:
+                    self.changeVal(i, j, 'x')
+        print(self)
+        
+    #Returns True if the user move is valid for checkers, False otherwise
+    def checkersValidMove(self, row, col, row_move, col_move):
+        return True
 
+    #Used for games where initial state of board has pieces placed
     def place_pieces(self, game_no):
         if game_no == 3: #checkers
-            print('setting board')
-            print(self)
+            self.checkersPlacePieces()
                 
-
     def new_copy(self):
         new = Board(self.numRows, self.numCols)
         new.setBoard(self.board)
         return new
 
+    #used for Connect-4
     def dropPiece(self, col: int, engineTurn: bool) -> None:
         for i in range(self.numRows - 1, -1, -1):
             if self.board[i][col] == ' ':
@@ -72,6 +91,10 @@ class Board(object):
             return self.tictactoeChildren(engineTurn)
         elif game_no == 2:
             return self.connect4children(engineTurn) 
+        elif game_no == 3:
+            return self.checkersChildren(engineTurn)
+        else:
+            return []
 
     def tictactoeChildren(self, engineTurn: bool) -> list: 
         children = []
@@ -111,6 +134,24 @@ class Board(object):
 
 
         return children
+    
+    def checkers_o_moves(self) -> set:
+        s = set()
+        
+        
+        return s
+    
+    
+    def checkers_x_moves(self) -> set:
+        s = set()
+        
+        return s
+    
+    def checkersChildren(self, engineTurn: bool) -> set:
+        if engineTurn:
+           return self.checkers_o_moves()
+        return self.checkers_x_moves()
+        
     
     def tictactoeEval(self):
         #unfinished game is 'neutral' in tic-tac-toe
@@ -219,6 +260,24 @@ class Board(object):
 
         return score
 
+    def checkersEval(self):
+        score = 0
+        for i in range(self.numRows):
+            for j in range(self.numCols):
+                if self.board[i][j] == ' ':
+                    continue
+                elif self.board[i][j] == 'o':
+                    score += 3
+                elif self.board[i][j] == 'O':
+                    score += 5
+                elif self.board[i][j] == 'x':
+                    score -= 3
+                else: #self.board[i][j] == 'X':
+                    score -= 5
+
+        
+        return score
+
     #Engine maximizing, user minimizing
     def evalGame(self, game_no: int) -> int:
         if game_no == 1:
@@ -230,6 +289,7 @@ class Board(object):
             return self.checkersEval()
         return 0
     
+    #Returns True if the indicated game is complete, False otherwise
     def gameComplete(self, game_no):
         if game_no == 1:
             return self.tictactoeGameComplete()          
@@ -256,11 +316,6 @@ class Board(object):
                     return False
                 
         return True
-        
-        
-        
-        
-        
         
     def connect4Complete(self):
         #Check for horizontal wins
