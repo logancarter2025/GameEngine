@@ -87,37 +87,7 @@ def tictactoe():
 
     print("Game Over")
     print(b)
-
-    b = Board(6, 7)
-    engineTurn = False
-
-    if True: # / test
-        b.changeVal(5, 0, 'x')
-        b.changeVal(4, 1, 'x')
-        b.changeVal(3, 2, 'x')
-
-        b.changeVal(5, 3, 'o')
-        b.changeVal(4, 3, 'o')
-        b.changeVal(3, 3, 'o')
-
-    if False: # \ test
-        b.changeVal(5, 3, 'x')
-        b.changeVal(4, 2, 'x')
-        b.changeVal(3, 1, 'x')
-
-        b.changeVal(5, 0, 'o')
-        b.changeVal(4, 0, 'o')
-        b.changeVal(3, 0, 'o')
-
-    while b.gameComplete(2) == False:
-        
-        col = int(input("What column to place piece: ").strip()) - 1
-        b.dropPiece(col, engineTurn)
-        print(b, end = "\n\n")
-        #engineTurn = not engineTurn
-
-    print("Game over")
-    print(b)
+    return
 
 def connect4():
     depth = 8
